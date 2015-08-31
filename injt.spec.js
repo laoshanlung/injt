@@ -122,5 +122,20 @@ describe('injt', function() {
             injector.inject('test');
             expect(spy.calls.count()).toBe(1);
         });
+
+        it('should support overwrite module', function() {
+            var spy1 = jasmine.createSpy('initial_module').and.returnValue({a: 1});
+            var spy2 = jasmine.createSpy('overwritten_module').and.returnValue({a: 2});
+            var test;
+
+            injector.module('test', spy1);
+            test = injector.inject('test');
+            expect(test.a).toEqual(1);
+
+            injector.module('test', spy2);
+            test = injector.inject('test');
+            expect(test.a).toEqual(2);
+            expect(spy2).toHaveBeenCalled();
+        });
     });
 });

@@ -68,6 +68,11 @@ function _module(name, fn) {
         throw 'Missing name';
     }
 
+    // allow overwrite previously defined module
+    if (self._modules[name]) {
+        delete self._modules[name];
+    }
+
     self._maps[name] = {
         deps: _.isFunction(fn) ? getParamNames(fn) : [],
         fn: fn
