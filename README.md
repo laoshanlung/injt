@@ -19,8 +19,12 @@ injector.module('anotherLib', function(Model, lodash) {
   return {};
 });
 
-var Model = injetor.inject('Model');
+var Model = injector.inject('Model');
 var model = new Model();
+// Or
+injector.inject(function(Model) {
+
+});
 ```
 
 ## Use function name as module name

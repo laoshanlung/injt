@@ -90,26 +90,35 @@ function alias(to, from) {
 }
 
 function inject(name) {
-    if (self._aliases[name]) {
-        name = self._aliases[name];
-    }
+    var deps, fn;
 
-    // check cache
-    if (self._modules[name]) {
-        return self._modules[name];
-    }
+    if (_.isString(name)) {
+        if (self._aliases[name]) {
+            name = self._aliases[name];
+        }
 
-    if (!self._maps[name]) {
-        // delegate to npm
-        self._modules[name] = require(name);
-        return self._modules[name];
+        // check cache
+        if (self._modules[name]) {
+            return self._modules[name];
+        }
+
+        if (!self._maps[name]) {
+            // delegate to npm
+            self._modules[name] = require(name);
+            return self._modules[name];
+        }
+
+        var mod = self._maps[name];
+        deps = mod.deps;
+        fn = mod.fn;
+    } else if (_.isFunction(name)) {
+        deps = getParamNames(name);
+        fn = name;
+    } else {
+        throw 'Unsupported type';
     }
 
     // this is the actual init process of the module
-    var mod = self._maps[name];
-    var deps = mod.deps;
-    var fn = mod.fn;
-
     var intersection = _.chain(_.keys(self._modules)).intersection(deps).value();
     var remaining = _.without.apply(_, _.union([deps], intersection));
     if (remaining.length) {

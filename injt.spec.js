@@ -137,5 +137,13 @@ describe('injt', function() {
             expect(test.a).toEqual(2);
             expect(spy2).toHaveBeenCalled();
         });
+
+        it('should support inject function mode', function() {
+            injector.inject(function(random, User, Service) {
+                expect(random).toBeDefined();
+                expect(User).toBeDefined();
+                expect(Service).toBeDefined();
+            });
+        });
     });
 });
