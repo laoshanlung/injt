@@ -138,12 +138,15 @@ describe('injt', function() {
             expect(spy2).toHaveBeenCalled();
         });
 
-        it('should support inject function mode', function() {
-            injector.inject(function(random, User, Service) {
+        it('should support inject function mode', function(done) {
+            var fn = injector.inject(function(random, User, Service) {
                 expect(random).toBeDefined();
                 expect(User).toBeDefined();
                 expect(Service).toBeDefined();
+
+                done();
             });
+            fn();
         });
     });
 });

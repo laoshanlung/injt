@@ -21,10 +21,10 @@ injector.module('anotherLib', function(Model, lodash) {
 
 var Model = injector.inject('Model');
 var model = new Model();
-// Or
-injector.inject(function(Model) {
+// Or in test
+describe('Test', injector.inject(function(Model) {
 
-});
+}));
 ```
 
 ## Use function name as module name

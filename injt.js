@@ -113,7 +113,6 @@ function inject(name) {
         fn = mod.fn;
     } else if (_.isFunction(name)) {
         deps = getParamNames(name);
-        fn = name;
     } else {
         throw 'Unsupported type';
     }
@@ -136,13 +135,20 @@ function inject(name) {
         resolved.push(self._modules[dep]);
     });
 
-    if (_.isFunction(fn)) {
-        self._modules[name] = fn.apply(null, resolved);
-    } else {
-        self._modules[name] = fn;
-    }
+    if (fn) {
+        if (_.isFunction(fn)) {
+            self._modules[name] = fn.apply(null, resolved);
+        } else {
+            self._modules[name] = fn;
+        }
 
-    return self._modules[name];
+        return self._modules[name];
+    } else {
+        fn = name;
+        return function() {
+            fn.apply(null, resolved);
+        };
+    }
 }
 
 self.discover = discover;

@@ -1,6 +1,6 @@
 {
   "name": "injt",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Nodejs dependency injection",
   "main": "index.js",
   "scripts": {},
