@@ -33,18 +33,24 @@ self.parsers = {
     }
 };
 
-function discover(dir) {
+function discover(dir, options) {
+    options = options || {};
     try {
         var files = fs.readdirSync(dir);
         _.each(files, function(file) {
             if (file.charAt(0) === '.') {
                 return;
             }
-            self.discover(path.join(dir, file));
+            self.discover(path.join(dir, file), options);
         });
     } catch (e) {
         if (e.code === 'ENOTDIR') {
             // this is a file
+
+            if (options.skip && options.skip.test(dir)) {
+                return;
+            }
+
             var ext = getFileExtension(dir);
             if (self.parsers[ext]) {
                 var result = self.parsers[ext](dir);
