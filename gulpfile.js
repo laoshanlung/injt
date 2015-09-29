@@ -6,7 +6,7 @@ gulp.task('test', ['lint'], function(done) {
     var jasmine = new Jasmine()
         , config = {
             'spec_files': [
-                '**/**.spec.js'
+                'injt.spec.js'
             ]
         };
 
@@ -26,7 +26,10 @@ gulp.task('test', ['lint'], function(done) {
 
 gulp.task('lint', function() {
     var paths = [
-        '**/*.js'
+        'examples/*.js',
+        'index.js',
+        'injt.js',
+        'injt.spec.js'
     ];
     return gulp.src(paths)
         .pipe(eslint())
