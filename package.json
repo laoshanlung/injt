@@ -16,6 +16,7 @@
     "url": "https://github.com/laoshanlung/injt.git"
   },
   "dependencies": {
+    "babel": "^5.8.23",
     "gulp": "^3.9.0",
     "lodash": "^3.10.1",
     "typescript": "^1.6.2"

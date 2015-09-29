@@ -1,7 +1,8 @@
 var fs = require('fs')
     , path = require('path')
     , _ = require('lodash')
-    , ts = require('typescript');
+    , ts = require('typescript')
+    , babel = require('babel');
 
 // http://stackoverflow.com/a/9924463
 var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
@@ -47,6 +48,14 @@ self.parsers = {
             module: ts.ModuleKind.CommonJS
         });
         return requireFromString(result, dir);
+    },
+    '.es': function(dir) {
+        var source = fs.readFileSync(dir).toString();
+        var result = babel.transform(source, {
+
+        });
+
+        return requireFromString(result.code);
     }
 };
 

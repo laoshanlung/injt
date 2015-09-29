@@ -90,13 +90,23 @@ describe('injt', function() {
             });
         });
 
-        it('should parse typescript files', function() {
+        it('should transpile typescript files', function() {
             var Product = injector.inject('Product');
             expect(Product).toBeDefined();
 
             var product = new Product();
             expect(product.name).toBe('product');
             expect(product.user.name).toBe('user');
+        });
+
+        it('should transform es6 files using babel', function() {
+            var Order = injector.inject('Order');
+            expect(Order).toBeDefined();
+
+            var order = new Order();
+            expect(order.name).toBe('order');
+            expect(order.product.name).toBe('product');
+            expect(order.user.name).toBe('user');
         });
     });
 
