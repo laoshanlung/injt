@@ -1,5 +1,5 @@
 module.exports = function User() {
     return function() {
-        this.name = 'Test';
+        this.name = 'user';
     };
 };

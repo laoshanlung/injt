@@ -1,6 +1,7 @@
 var fs = require('fs')
     , path = require('path')
-    , _ = require('lodash');
+    , _ = require('lodash')
+    , ts = require('typescript');
 
 // http://stackoverflow.com/a/9924463
 var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
@@ -13,6 +14,15 @@ function getParamNames(func) {
     }
     return result;
 }
+
+// http://stackoverflow.com/a/19682189/386378
+function requireFromString(src, filename) {
+    var m = new module.constructor();
+    m.paths = module.paths;
+    m._compile(src, filename);
+    return m.exports;
+}
+
 
 function getFileExtension(dir) {
     return path.extname(dir);
@@ -30,6 +40,13 @@ self.parsers = {
     },
     '.json': function(dir) {
         return require(dir);
+    },
+    '.ts': function(dir) {
+        var source = fs.readFileSync(dir).toString();
+        var result = ts.transpile(source, {
+            module: ts.ModuleKind.CommonJS
+        });
+        return requireFromString(result, dir);
     }
 };
 

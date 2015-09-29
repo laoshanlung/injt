@@ -62,8 +62,11 @@ describe('injt', function() {
     });
 
     describe('#discover', function() {
-        it('should automatically discover all modules', function() {
+        beforeEach(function() {
             injector.discover(path.join(__dirname, 'examples'));
+        });
+
+        it('should automatically discover all modules', function() {
             expect(injector._maps.random).toEqual({
                 deps: ['Service', 'User'],
                 fn: require('./examples/random')
@@ -85,6 +88,15 @@ describe('injt', function() {
                     'a': 1
                 }
             });
+        });
+
+        it('should parse typescript files', function() {
+            var Product = injector.inject('Product');
+            expect(Product).toBeDefined();
+
+            var product = new Product();
+            expect(product.name).toBe('product');
+            expect(product.user.name).toBe('user');
         });
     });
 
