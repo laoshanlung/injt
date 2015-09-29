@@ -1,10 +1,10 @@
 module.exports = function Product(User) {
-    class Product {
+    class Model {
         constructor() {
             this.name = 'product';
             this.user = new User();
         }
     }
 
-    return Product;
-}
+    return Model;
+};

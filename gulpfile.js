@@ -26,7 +26,7 @@ gulp.task('test', ['lint'], function(done) {
 
 gulp.task('lint', function() {
     var paths = [
-        'examples/*.js',
+        'examples/*.+(js|es|ts)',
         'index.js',
         'injt.js',
         'injt.spec.js'

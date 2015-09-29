@@ -8,4 +8,4 @@ module.exports = function Order(Product, User) {
     }
 
     return Model;
-}
+};
